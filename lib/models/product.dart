@@ -6,6 +6,7 @@ class Product {
   String? category;
   String? image;
   Rating? rating;
+  String? quantity;
   Product();
   Product.fromJson(Map<String, dynamic> jsonData) {
     id = jsonData['id'];
