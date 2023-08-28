@@ -7,6 +7,10 @@ import 'package:flutter_commarce/services/prefs.service.dart';
 class FavouriteProvider extends ChangeNotifier {
   List<Product>? favouriteProducts;
   final _prefrenceKey = 'favouriteProducts';
+
+  bool isFavourite(int productId) =>
+      (favouriteProducts?.any((e) => e.id == productId) ?? false);
+
   void getFavoriteProducts() async {
     await Future.delayed(const Duration(seconds: 1));
     if (PrefService.preferences?.getStringList(_prefrenceKey) == null) return;

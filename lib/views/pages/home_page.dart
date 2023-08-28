@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_commarce/models/product.dart';
+import 'package:flutter_commarce/providers/cart_provider.dart';
 import 'package:flutter_commarce/providers/favourite.provider.dart';
 import 'package:flutter_commarce/providers/product.provider.dart';
 import 'package:flutter_commarce/views/widgets/ad_widget.dart';
@@ -19,6 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    Provider.of<CartProvider>(context, listen: false).getCartProducts();
     Provider.of<FavouriteProvider>(context, listen: false)
         .getFavoriteProducts();
     Provider.of<ProductProvider>(context, listen: false).getCategories();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_commarce/providers/cart_provider.dart';
 import 'package:flutter_commarce/providers/favourite.provider.dart';
 import 'package:flutter_commarce/providers/product.provider.dart';
 import 'package:flutter_commarce/services/prefs.service.dart';
@@ -12,6 +13,7 @@ void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => FavouriteProvider()),
+    ChangeNotifierProvider(create: (_) => CartProvider()),
   ], child: MyApp()));
 }
 
