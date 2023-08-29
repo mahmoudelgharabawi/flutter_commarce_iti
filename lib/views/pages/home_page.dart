@@ -3,6 +3,7 @@ import 'package:flutter_commarce/models/product.dart';
 import 'package:flutter_commarce/providers/cart_provider.dart';
 import 'package:flutter_commarce/providers/favourite.provider.dart';
 import 'package:flutter_commarce/providers/product.provider.dart';
+import 'package:flutter_commarce/views/pages/all_products_page.dart';
 import 'package:flutter_commarce/views/widgets/ad_widget.dart';
 import 'package:flutter_commarce/views/widgets/category_item.dart';
 import 'package:flutter_commarce/views/widgets/product.widget.dart';
@@ -87,12 +88,18 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w600,
                       fontSize: 20),
                 ),
-                Text(
-                  'See All',
-                  style: TextStyle(
-                      color: Color(0xffF17547),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const AllProductsPage())),
+                  child: const Text(
+                    'See All',
+                    style: TextStyle(
+                        color: Color(0xffF17547),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
+                  ),
                 ),
               ],
             ),
