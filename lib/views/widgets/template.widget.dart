@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_commarce/providers/cart_provider.dart';
+import 'package:flutter_commarce/views/pages/cart_page.dart';
 import 'package:flutter_commarce/views/pages/favourites_page.dart';
 import 'package:flutter_commarce/views/pages/home_page.dart';
+import 'package:provider/provider.dart';
 
 class TemplateWidget extends StatelessWidget {
   final int? bottomNavIndex;
@@ -29,7 +32,21 @@ class TemplateWidget extends StatelessWidget {
                     BottomNavigationBarItem(
                         label: '', icon: Icon(Icons.favorite_outline)),
                     BottomNavigationBarItem(
-                        label: '', icon: Icon(Icons.shopping_cart_outlined)),
+                        label: '',
+                        icon: ((Provider.of<CartProvider>(context).cartItems ==
+                                    null) ||
+                                (Provider.of<CartProvider>(context)
+                                        .cartItems
+                                        ?.isEmpty ??
+                                    false))
+                            ? const Icon(Icons.shopping_cart_outlined)
+                            : Badge(
+                                label: Text(Provider.of<CartProvider>(context)
+                                    .cartItems!
+                                    .length
+                                    .toString()),
+                                child: const Icon(Icons.shopping_cart_outlined),
+                              )),
                     BottomNavigationBarItem(
                         label: '', icon: Icon(Icons.account_circle_outlined))
                   ]),
@@ -87,6 +104,8 @@ class TemplateWidget extends StatelessWidget {
       page = const HomePage();
     } else if (index == 1) {
       page = const FavouritesPage();
+    } else if (index == 2) {
+      page = const CartPage();
     }
 
     Navigator.push(context,
