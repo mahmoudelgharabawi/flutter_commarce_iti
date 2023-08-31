@@ -62,7 +62,7 @@ class CartPage extends StatelessWidget {
                               fontWeight: FontWeight.w600, fontSize: 20),
                         ),
                         Text(
-                          '\$${Provider.of<CartProvider>(context).getTotalCartValue()}',
+                          '\$${Provider.of<CartProvider>(context).getTotalCartValue().truncate()}',
                           style: TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: 16,

@@ -1,15 +1,16 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_commarce/main.dart';
 import 'package:flutter_commarce/models/order_item.dart';
 import 'package:flutter_commarce/models/product.dart';
+import 'package:flutter_commarce/services/app_config.service.dart';
 import 'package:flutter_commarce/services/prefs.service.dart';
 import 'package:flutter_commarce/views/pages/home_page.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
-import 'package:http/http.dart' as http;
 
 class CartProvider extends ChangeNotifier {
   List<OrderItem>? cartItems;
@@ -37,9 +38,14 @@ class CartProvider extends ChangeNotifier {
     _dialog.hide();
   }
 
-  void onChangeItemQuantity(int productId, {bool decrease = false}) async {
+  void onChangeItemQuantity(int productId,
+      {bool decrease = false, bool fromCart = false}) async {
     _dialog.show(
         message: 'Loading...', type: SimpleFontelicoProgressDialogType.phoenix);
+
+    if (fromCart) {
+      getItemQuantity(productId);
+    }
 
     if (decrease == true) {
       if (itemQuantity == 1) {
@@ -51,6 +57,7 @@ class CartProvider extends ChangeNotifier {
     } else {
       itemQuantity++;
     }
+
     if (!checkItemInCart(productId)) {
       notifyListeners();
       _dialog.hide();
@@ -147,48 +154,42 @@ class CartProvider extends ChangeNotifier {
   void onBuyNowClicked() async {
     _dialog.show(
         message: 'Loading...', type: SimpleFontelicoProgressDialogType.phoenix);
-    var now = DateTime.now();
 
     try {
       var encodedList =
           PrefService.preferences?.getStringList(_prefrenceKey) ?? [];
 
-      var response =
-          await http.post(Uri.parse('https://fakestoreapi.com/carts'), body: {
-        "date": '${now.year} - ${now.month} - ${now.day}',
-        "products": jsonEncode(encodedList)
+      var totalItems = 0;
+      var totalPrice = 0.0;
+
+      for (var item in cartItems!) {
+        totalItems += (item.quantity ?? 0);
+        totalPrice += (item.price ?? 0);
+      }
+
+      await FirebaseFirestore.instance.collection('carts').add({
+        "products": encodedList.map((e) => jsonDecode(e)).toList(),
+        "createdAt": DateTime.now(),
+        "createdUser": AppConfigService.currentUser?.email,
+        "totalPrice": totalPrice,
+        "totalItems": totalItems,
       });
 
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        await PrefService.preferences?.setStringList(_prefrenceKey, []);
-        await getCartProducts();
-        _dialog.hide();
-        Alert(
-            context: navigatorKey.currentContext!,
-            title: "Order Done Successfully",
-            type: AlertType.success,
-            buttons: [
-              DialogButton(
-                  onPressed: () => Navigator.pushAndRemoveUntil(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const HomePage()),
-                      (route) => false),
-                  child: const Text('Ok'))
-            ]).show();
-      } else {
-        _dialog.hide();
-
-        Alert(
-            context: navigatorKey.currentContext!,
-            title: "Error In Creating Order",
-            desc: 'status Code : ${response.statusCode}',
-            type: AlertType.error,
-            buttons: [
-              DialogButton(
-                  onPressed: () => Navigator.pop(navigatorKey.currentContext!),
-                  child: const Text('Ok'))
-            ]).show();
-      }
+      await PrefService.preferences?.setStringList(_prefrenceKey, []);
+      await getCartProducts();
+      _dialog.hide();
+      Alert(
+          context: navigatorKey.currentContext!,
+          title: "Order Done Successfully",
+          type: AlertType.success,
+          buttons: [
+            DialogButton(
+                onPressed: () => Navigator.pushAndRemoveUntil(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(builder: (_) => const HomePage()),
+                    (route) => false),
+                child: const Text('Ok'))
+          ]).show();
     } catch (e) {
       _dialog.hide();
 

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "617312307147",
+    "project_id": "e-commarce-iti",
+    "storage_bucket": "e-commarce-iti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617312307147:android:8f8e1677869a51ca4e584e",
+        "android_client_info": {
+          "package_name": "com.example.flutter_commarce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617312307147-fs7on4u8oj7htmhit471t2mtoj5njlh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV2PjmvtlKacwnviZy6SUtL5JCZ1O7EZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617312307147-fs7on4u8oj7htmhit471t2mtoj5njlh3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "617312307147-27g97bktoedeaj94u2ah1rieg16nlaoc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eCommarceIti"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,7 @@ import 'package:flutter_commarce/views/pages/all_products_page.dart';
 import 'package:flutter_commarce/views/pages/cart_page.dart';
 import 'package:flutter_commarce/views/pages/favourites_page.dart';
 import 'package:flutter_commarce/views/pages/home_page.dart';
+import 'package:flutter_commarce/views/pages/profile_page.dart';
 import 'package:provider/provider.dart';
 
 class TemplateWidget extends StatelessWidget {
@@ -124,6 +125,8 @@ class TemplateWidget extends StatelessWidget {
       page = const FavouritesPage();
     } else if (index == 2) {
       page = const CartPage();
+    } else {
+      page = const ProfilePage();
     }
 
     Navigator.push(context,

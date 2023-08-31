@@ -121,7 +121,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                             cartProvider.onChangeItemQuantity(
                                                 widget.orderItem.product?.id ??
                                                     0,
-                                                decrease: true),
+                                                decrease: true,
+                                                fromCart: true),
                                         child: Icon(
                                           Icons.remove,
                                           size: 18,
@@ -138,7 +139,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                         onTap: () =>
                                             cartProvider.onChangeItemQuantity(
                                                 widget.orderItem.product?.id ??
-                                                    0),
+                                                    0,
+                                                fromCart: true),
                                         child: Icon(
                                           Icons.add,
                                           size: 18,

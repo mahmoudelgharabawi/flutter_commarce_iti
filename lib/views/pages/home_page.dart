@@ -3,6 +3,7 @@ import 'package:flutter_commarce/models/product.dart';
 import 'package:flutter_commarce/providers/cart_provider.dart';
 import 'package:flutter_commarce/providers/favourite.provider.dart';
 import 'package:flutter_commarce/providers/product.provider.dart';
+import 'package:flutter_commarce/services/app_config.service.dart';
 import 'package:flutter_commarce/views/pages/all_products_page.dart';
 import 'package:flutter_commarce/views/widgets/ad_widget.dart';
 import 'package:flutter_commarce/views/widgets/category_item.dart';
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Text(
-                  'Hello Fola ',
+                  'Hello ${AppConfigService.currentUser?.email} ',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                 ),
                 Image.asset('assets/images/hand.png')
